@@ -65,13 +65,13 @@
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/spiritloose/UID2-Client-PP/issues"
+         "web" : "https://github.com/spiritloose/uid2-client-perl/issues"
       },
-      "homepage" : "https://github.com/spiritloose/UID2-Client-PP",
+      "homepage" : "https://github.com/spiritloose/uid2-client-perl",
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/spiritloose/UID2-Client-PP.git",
-         "web" : "https://github.com/spiritloose/UID2-Client-PP"
+         "url" : "https://github.com/spiritloose/uid2-client-perl.git",
+         "web" : "https://github.com/spiritloose/uid2-client-perl"
       }
    },
    "version" : "0.01",

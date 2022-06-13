@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/spiritloose/UID2-Client-PP/workflows/test/badge.svg)](https://github.com/spiritloose/UID2-Client-PP/actions) [![MetaCPAN Release](https://badge.fury.io/pl/UID2-Client.svg)](https://metacpan.org/release/UID2-Client)
+[![Actions Status](https://github.com/spiritloose/uid2-client-perl/workflows/test/badge.svg)](https://github.com/spiritloose/uid2-client-perl/actions) [![MetaCPAN Release](https://badge.fury.io/pl/UID2-Client.svg)](https://metacpan.org/release/UID2-Client)
 # NAME
 
 UID2::Client - Unified ID 2.0 Perl Client
