@@ -7,7 +7,7 @@ recommends 'IO::Socket::SSL', '1.56';
 recommends 'Net::SSLeay', '1.49';
 requires 'JSON';
 recommends 'JSON::XS';
-requires 'CryptX';
+requires 'CryptX', '0.060';
 
 on 'test' => sub {
     requires 'Test::More', '0.98';
