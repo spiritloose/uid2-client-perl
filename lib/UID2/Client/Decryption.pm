@@ -139,6 +139,8 @@ my $EncryptedDataTypeV3 = 96;
 
 my $EncryptedDataVersionV3 = 112;
 
+my $CBC_IV_LEN = 16;
+
 my $GCM_IV_LEN = 12;
 
 my $GCM_AUTHTAG_LEN = 16;
@@ -288,15 +290,15 @@ sub _decode_identity_scope {
 sub encrypt_cbc {
     my ($data, $secret, $iv) = @_;
     my $cipher = Crypt::Mode::CBC->new('AES');
-    $iv //= random_bytes(16);
+    $iv //= random_bytes($CBC_IV_LEN);
     $iv . $cipher->encrypt($data, $secret, $iv);
 }
 
 sub decrypt_cbc {
     my ($data, $secret) = @_;
-    my $iv = substr $data, 0, 16;
+    my $iv = substr $data, 0, $CBC_IV_LEN;
     my $cipher = Crypt::Mode::CBC->new('AES');
-    my $payload = substr $data, 16;
+    my $payload = substr $data, $CBC_IV_LEN;
     $cipher->decrypt($payload, $secret, $iv);
 }
 
