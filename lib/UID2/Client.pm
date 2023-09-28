@@ -2,7 +2,7 @@ package UID2::Client;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use Class::Accessor::Lite (
     rw => [qw(endpoint auth_key secret_key identity_scope http keys)],
