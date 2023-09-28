@@ -59,7 +59,7 @@ subtest SmokeTest => sub {
     });
     isa_ok $client, 'UID2::Client';
     $client->refresh;
-    my $advertising_token = t::TestUtils::encrypt_token_v3(
+    my $advertising_token = t::TestUtils::generate_token_v4(
         id_str => $example_uid,
         site_id => $site_id,
         identity_scope => UID2::Client::IdentityScope::UID2,
@@ -77,7 +77,7 @@ subtest SmokeTest => sub {
 
 subtest EmptyKeyContainer => sub {
     my $client = UID2::Client->new($client_options);
-    my $advertising_token = t::TestUtils::encrypt_token_v3(
+    my $advertising_token = t::TestUtils::generate_token_v4(
         id_str => $example_uid,
         site_id => $site_id,
         identity_scope => UID2::Client::IdentityScope::UID2,
@@ -95,7 +95,7 @@ subtest ExpiredKeyContainer => sub {
         http => t::TestUtils::mock_http($secret_key, $master_key, $site_key),
     });
     $client->refresh;
-    my $advertising_token = t::TestUtils::encrypt_token_v3(
+    my $advertising_token = t::TestUtils::generate_token_v4(
         id_str => $example_uid,
         site_id => $site_id,
         identity_scope => UID2::Client::IdentityScope::UID2,
@@ -129,7 +129,7 @@ subtest ExpiredKeyContainer => sub {
 };
 
 subtest NotAuthorizedForKey => sub {
-    my $advertising_token = t::TestUtils::encrypt_token_v3(
+    my $advertising_token = t::TestUtils::generate_token_v4(
         id_str => $example_uid,
         site_id => $site_id,
         identity_scope => UID2::Client::IdentityScope::UID2,
@@ -168,7 +168,7 @@ subtest InvalidPayload => sub {
         http => t::TestUtils::mock_http($secret_key, $master_key, $site_key),
     });
     $client->refresh;
-    my $advertising_token = t::TestUtils::encrypt_token_v3(
+    my $advertising_token = t::TestUtils::generate_token_v4(
         id_str => $example_uid,
         site_id => $site_id,
         identity_scope => UID2::Client::IdentityScope::UID2,
@@ -190,7 +190,7 @@ subtest TokenExpiryAndCustomNow => sub {
         http => t::TestUtils::mock_http($secret_key, $master_key, $site_key),
     });
     $client->refresh;
-    my $advertising_token = t::TestUtils::encrypt_token_v3(
+    my $advertising_token = t::TestUtils::generate_token_v4(
         id_str => $example_uid,
         site_id => $site_id,
         identity_scope => UID2::Client::IdentityScope::UID2,
@@ -257,7 +257,7 @@ subtest SiteIdFromToken => sub {
         http => t::TestUtils::mock_http($secret_key, $master_key, $site_key),
     });
     $client->refresh;
-    my $advertising_token = t::TestUtils::encrypt_token_v3(
+    my $advertising_token = t::TestUtils::generate_token_v4(
         id_str => $example_uid,
         site_id => $site_id,
         identity_scope => UID2::Client::IdentityScope::UID2,
@@ -285,7 +285,7 @@ subtest SiteIdFromTokenCustomSiteKeySiteId => sub {
         http => t::TestUtils::mock_http($secret_key, $master_key, $site_key),
     });
     $client->refresh;
-    my $advertising_token = t::TestUtils::encrypt_token_v3(
+    my $advertising_token = t::TestUtils::generate_token_v4(
         id_str => $example_uid,
         site_id => $site_id2,
         identity_scope => UID2::Client::IdentityScope::UID2,
@@ -308,7 +308,7 @@ subtest SiteIdAndTokenSet => sub {
         http => t::TestUtils::mock_http($secret_key, $master_key, $site_key),
     });
     $client->refresh;
-    my $advertising_token = t::TestUtils::encrypt_token_v3(
+    my $advertising_token = t::TestUtils::generate_token_v4(
         id_str => $example_uid,
         site_id => $site_id,
         identity_scope => UID2::Client::IdentityScope::UID2,
@@ -414,7 +414,7 @@ subtest TokenDecryptKeyExpired => sub {
         secret    => $site_key->secret,
     );
     $client->refresh_json(t::TestUtils::key_set_to_json($master_key, $key));
-    my $advertising_token = t::TestUtils::encrypt_token_v3(
+    my $advertising_token = t::TestUtils::generate_token_v4(
         id_str => $example_uid,
         site_id => $site_id,
         identity_scope => UID2::Client::IdentityScope::UID2,
@@ -523,7 +523,7 @@ subtest TokenExpired => sub {
         http => t::TestUtils::mock_http($secret_key, $master_key, $site_key),
     });
     $client->refresh;
-    my $advertising_token = t::TestUtils::encrypt_token_v3(
+    my $advertising_token = t::TestUtils::generate_token_v4(
         id_str => $example_uid,
         site_id => $site_id,
         identity_scope => UID2::Client::IdentityScope::UID2,

@@ -4,7 +4,7 @@
       "Jiro Nishiguchi <jiro@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v3.1.19, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "Minilla/v3.1.22, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "perl_5"
    ],
@@ -76,6 +76,6 @@
    },
    "version" : "0.01",
    "x_authority" : "cpan:JIRO",
-   "x_serialization_backend" : "JSON::PP version 4.10",
+   "x_serialization_backend" : "JSON::PP version 4.16",
    "x_static_install" : 1
 }

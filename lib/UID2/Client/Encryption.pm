@@ -1,4 +1,4 @@
-package UID2::Client::Decryption;
+package UID2::Client::Encryption;
 use strict;
 use warnings;
 
@@ -6,24 +6,44 @@ use Carp;
 use Crypt::Cipher::AES;
 use Crypt::Mode::CBC;
 use Crypt::AuthEnc::GCM;
-use Crypt::Misc qw(encode_b64 decode_b64);
+use Crypt::Misc qw(encode_b64 decode_b64 decode_b64u);
 use Crypt::PRNG qw(random_bytes);
 
+use UID2::Client::AdvertisingTokenVersion;
 use UID2::Client::DecryptionStatus;
 use UID2::Client::EncryptionStatus;
 use UID2::Client::Timestamp;
 
 sub decrypt_token {
     my $token = shift;
+    my @args = @_;
+    if (length $token < 4) {
+        return _error_response(UID2::Client::DecryptionStatus::INVALID_PAYLOAD);
+    }
     my $result = eval {
-        my $bytes = decode_b64($token);
-        unless (defined $bytes) {
+        my $header = substr $token, 0, 4;
+        my $header_bytes;
+        if ($header =~ /[\-_]/) {
+            $header_bytes = decode_b64u($header);
+        } else {
+            $header_bytes = decode_b64($header);
+        }
+        if (!defined $header_bytes or length $header_bytes < 2) {
             return _error_response(UID2::Client::DecryptionStatus::INVALID_PAYLOAD);
         }
-        if (ord(substr($bytes, 0, 1)) == 2) {
-            return _decrypt_token_v2($bytes, @_);
-        } elsif (ord(substr($bytes, 1, 1)) == 112) {
-            return _decrypt_token_v3($bytes, @_);
+        if (ord(substr($header_bytes, 0, 1)) == 2) {
+            my $bytes = decode_b64($token);
+            return _error_response(UID2::Client::DecryptionStatus::INVALID_PAYLOAD) unless defined $bytes;
+            return _decrypt_token_v2($bytes, @args);
+        } elsif (ord(substr($header_bytes, 1, 1)) == UID2::Client::AdvertisingTokenVersion::V3) {
+            my $bytes = decode_b64($token);
+            return _error_response(UID2::Client::DecryptionStatus::INVALID_PAYLOAD) unless defined $bytes;
+            return _decrypt_token_v3($bytes, @args);
+        } elsif (ord(substr($header_bytes, 1, 1)) == UID2::Client::AdvertisingTokenVersion::V4) {
+            # same as V3 but use Base64URL encoding
+            my $bytes = decode_b64u($token);
+            return _error_response(UID2::Client::DecryptionStatus::INVALID_PAYLOAD) unless defined $bytes;
+            return _decrypt_token_v3($bytes, @args);
         } else {
             return _error_response(UID2::Client::DecryptionStatus::VERSION_NOT_SUPPORTED);
         }
